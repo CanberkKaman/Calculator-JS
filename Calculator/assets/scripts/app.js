@@ -24,36 +24,42 @@ function writeToLog(operationIdentifier, prevResult, operationNumber, newResult)
     console.log(logEntries);
 }
 
-function add() {
+function calculateResult(calculationType) {
     const enteredNumber = getUserNumberInput();
     const initialResult = currentResult;
-    currentResult += enteredNumber;
-    createAndWriteOutput('+', initialResult, enteredNumber);
-    writeToLog('ADD', initialResult, enteredNumber, currentResult);
+    let matchOperator;
+    if(calculationType === 'ADD') {
+        currentResult += enteredNumber;
+        matchOperator = '+';
+    } else if (calculationType === 'SUBTRACT') {
+        currentResult -= enteredNumber;
+        matchOperator = '-';
+    } else if (calculationType === 'MULTIPLY') {
+        currentResult *= enteredNumber;
+        matchOperator = '*';
+    } else {
+        currentResult /= enteredNumber;
+        matchOperator = '/';
+    }
+    
+    createAndWriteOutput(matchOperator, initialResult, enteredNumber);
+    writeToLog(calculationType, initialResult, enteredNumber, currentResult);
+}
+
+function add() {
+    calculateResult('ADD');
 }
 
 function subtract () {
-    const enteredNumber = getUserNumberInput();
-    const initialResult = currentResult;
-    currentResult -= enteredNumber;
-    createAndWriteOutput('-', initialResult, enteredNumber);
-    writeToLog('SUBTRACT', initialResult, enteredNumber, currentResult);
+    calculateResult('SUBTRACT');
 }
 
 function multiply () {
-    const enteredNumber = getUserNumberInput();
-    const initialResult = currentResult;
-    currentResult *= enteredNumber;
-    createAndWriteOutput('*', initialResult, enteredNumber);
-    writeToLog('MULTIPLY', initialResult, enteredNumber, currentResult);
+    calculateResult('MULTIPLY');
 }
 
 function divide () {
-    const enteredNumber = getUserNumberInput();
-    const initialResult = currentResult;
-    currentResult /= enteredNumber;
-    createAndWriteOutput('/', initialResult, enteredNumber);
-    writeToLog('DIVIDE', initialResult, enteredNumber, currentResult);
+    calculateResult('DIVIDE');
 }
 
 addBtn.addEventListener('click', add);
